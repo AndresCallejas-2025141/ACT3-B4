@@ -1,85 +1,124 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef,Component,OnDestroy,OnInit} from '@angular/core';
+ 
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
+ 
 import { Producto } from '../../models/producto';
-import { CarritoService } from '../../services/carritoService';
-import { obtenerIcono } from '../../utils/iconos';
-
+import { CarritoService } from '../../services/carrito';
 import { SubtotalPipe } from '../../pipes/subtotal-pipe';
-import { TotalPipe } from '../../pipes/total-pipe';
-
+ 
 @Component({
   selector: 'app-carrito',
   standalone: true,
-
   imports: [
     CommonModule,
-    SubtotalPipe,
-    TotalPipe
+    FormsModule,
+    SubtotalPipe
   ],
-
   templateUrl: './carrito.html',
   styleUrl: './carrito.css'
 })
-export class Carrito {
-
-  carrito: Producto[] = [];
-
+export class Carrito implements OnInit, OnDestroy {
+ 
+  productos: Producto[] = [];
+  total = 0;
+ 
+  private carritoSubscription?: Subscription;
+ 
   constructor(
-    private carritoService: CarritoService
-  ) {
-
-    this.carritoService.carrito$
-      .subscribe(productos => {
-
-        this.carrito = productos;
-
+    private carritoService: CarritoService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
+ 
+  ngOnInit(): void {
+    this.carritoSubscription =
+      this.carritoService.carrito$.subscribe({
+        next: (productos) => {
+          this.productos = productos;
+          this.calcularTotal();
+ 
+          console.log(
+            'Productos recibidos en el carrito:',
+            productos
+          );
+ 
+          this.changeDetectorRef.markForCheck();
+        },
+ 
+        error: (error) => {
+          console.error(
+            'Error al recibir el carrito:',
+            error
+          );
+        }
       });
-
   }
-
-  obtenerIcono(nombre: string): string {
-    return obtenerIcono(nombre);
-  }
-
-  get totalArticulos(): number {
-    return this.carrito.reduce((total, producto) => total + producto.cantidad, 0);
-  }
-
-  incrementar(producto: Producto): void {
-    this.carritoService.cambiarCantidad(producto.id, producto.cantidad + 1);
-  }
-
-  decrementar(producto: Producto): void {
-    this.carritoService.cambiarCantidad(producto.id, producto.cantidad - 1);
-  }
-
-  cambiarCantidad(
-    producto: Producto,
-    event: Event
-  ): void {
-
-    const input =
-      event.target as HTMLInputElement;
-
-    const cantidad =
-      Number(input.value);
-
-    this.carritoService.cambiarCantidad(
+ 
+  aumentarCantidad(producto: Producto): void {
+    this.carritoService.actualizarCantidad(
       producto.id,
-      cantidad
+      producto.cantidad + 1
     );
   }
-
-  eliminarProducto(id: number): void {
-
-    this.carritoService.eliminarProducto(id);
-
+ 
+  disminuirCantidad(producto: Producto): void {
+    this.carritoService.actualizarCantidad(
+      producto.id,
+      producto.cantidad - 1
+    );
   }
-
+ 
+  cambiarCantidad(
+    producto: Producto,
+    cantidad: number
+  ): void {
+    const nuevaCantidad = Number(cantidad);
+ 
+    if (
+      !Number.isInteger(nuevaCantidad) ||
+      nuevaCantidad < 1
+    ) {
+      return;
+    }
+ 
+    this.carritoService.actualizarCantidad(
+      producto.id,
+      nuevaCantidad
+    );
+  }
+ 
+  eliminarProducto(id: number): void {
+    this.carritoService.eliminarProducto(id);
+  }
+ 
   vaciarCarrito(): void {
-
     this.carritoService.vaciarCarrito();
-
+  }
+ 
+  calcularTotal(): void {
+    this.total = this.productos.reduce(
+      (acumulado, producto) => {
+        return (
+          acumulado +
+          producto.precio * producto.cantidad
+        );
+      },
+      0
+    );
+  }
+ 
+  obtenerCantidadTotal(): number {
+    return this.productos.reduce(
+      (acumulado, producto) => {
+        return acumulado + producto.cantidad;
+      },
+      0
+    );
+  }
+ 
+  ngOnDestroy(): void {
+    this.carritoSubscription?.unsubscribe();
   }
 }
+ 
