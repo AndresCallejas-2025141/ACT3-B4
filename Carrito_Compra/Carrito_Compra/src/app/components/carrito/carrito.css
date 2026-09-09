@@ -1,0 +1,798 @@
+:root {
+  --bg: #0f0f0f;
+  --surface: #181818;
+  --surface-2: #202020;
+  --surface-hover: #242424;
+
+  --border: #303030;
+  --border-light: #3a3a3a;
+
+  --text: #ffffff;
+  --text-soft: #d4d4d4;
+  --text-muted: #8b8b8b;
+
+  --yellow: #ffa31a;
+  --yellow-hover: #ffb733;
+  --yellow-soft: rgba(255, 163, 26, 0.12);
+  --yellow-border: rgba(255, 163, 26, 0.35);
+
+  --danger: #ff4d4d;
+  --danger-soft: rgba(255, 77, 77, 0.12);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 18px 45px rgba(0, 0, 0, 0.45);
+
+  --transition: 180ms ease;
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+.carrito-section {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+
+  padding: 32px 40px 60px;
+
+  color: var(--text);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.carrito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+
+  color: var(--yellow);
+}
+
+.etiqueta::before {
+  content: "";
+
+  width: 22px;
+  height: 3px;
+
+  border-radius: 999px;
+
+  background: var(--yellow);
+  box-shadow: 0 0 12px rgba(255, 163, 26, 0.45);
+}
+
+.carrito-header h1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 8px 0 0;
+
+  color: var(--text);
+
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 850;
+  line-height: 1;
+
+  letter-spacing: -1px;
+}
+
+.contador {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 30px;
+  height: 26px;
+
+  padding: 0 9px;
+
+  border: 1px solid var(--yellow-border);
+  border-radius: 999px;
+
+  background: var(--yellow-soft);
+
+  color: var(--yellow);
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   BOTÓN VACIAR
+   ========================================================= */
+
+.btn-vaciar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+
+  padding: 10px 17px;
+
+  border: 1px solid rgba(255, 77, 77, 0.3);
+  border-radius: var(--radius-md);
+
+  background: var(--danger-soft);
+  color: var(--danger);
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+}
+
+.btn-vaciar:hover {
+  background: rgba(255, 77, 77, 0.18);
+  border-color: rgba(255, 77, 77, 0.55);
+
+  transform: translateY(-1px);
+}
+
+.btn-vaciar:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   CARRITO VACÍO
+   ========================================================= */
+
+.carrito-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 360px;
+
+  padding: 60px 24px;
+
+  border: 1px dashed #383838;
+  border-radius: var(--radius-xl);
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 163, 26, 0.06),
+      transparent 45%
+    ),
+    var(--surface);
+
+  text-align: center;
+}
+
+.carrito-vacio-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 82px;
+  height: 82px;
+
+  margin-bottom: 22px;
+
+  border: 1px solid var(--yellow-border);
+  border-radius: 50%;
+
+  background: var(--yellow-soft);
+
+  color: var(--yellow);
+
+  font-size: 36px;
+
+  box-shadow:
+    0 0 0 8px rgba(255, 163, 26, 0.025),
+    0 0 35px rgba(255, 163, 26, 0.08);
+}
+
+.carrito-vacio h2 {
+  margin: 0 0 8px;
+
+  color: var(--text);
+
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.carrito-vacio p {
+  max-width: 420px;
+
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   LISTA DE PRODUCTOS
+   ========================================================= */
+
+.carrito-contenido {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+
+/* =========================================================
+   ITEM DEL CARRITO
+   ========================================================= */
+
+.carrito-item {
+  display: grid;
+
+  grid-template-columns:
+    minmax(260px, 1fr)
+    170px
+    150px
+    48px;
+
+  align-items: center;
+
+  gap: 24px;
+
+  padding: 18px 20px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.018),
+      transparent
+    ),
+    var(--surface);
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.carrito-item:hover {
+  border-color: var(--yellow-border);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 163, 26, 0.035),
+      transparent
+    ),
+    var(--surface-hover);
+
+  box-shadow: var(--shadow-md);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   INFORMACIÓN DEL PRODUCTO
+   ========================================================= */
+
+.item-info {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+
+  gap: 15px;
+}
+
+.item-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;
+  height: 50px;
+
+  flex: 0 0 50px;
+
+  border: 1px solid var(--yellow-border);
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 163, 26, 0.15),
+      rgba(255, 163, 26, 0.04)
+    );
+
+  color: var(--yellow);
+
+  font-size: 21px;
+
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.item-info h2 {
+  overflow: hidden;
+
+  margin: 0 0 5px;
+
+  color: var(--text);
+
+  font-size: 15px;
+  font-weight: 750;
+
+  line-height: 1.3;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-info span {
+  display: block;
+
+  color: var(--text-muted);
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   CANTIDAD
+   ========================================================= */
+
+.cantidad {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.cantidad label {
+  color: var(--text-muted);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.cantidad-control {
+  display: flex;
+  align-items: stretch;
+
+  width: fit-content;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+
+  background: #111;
+}
+
+.btn-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  min-width: 34px;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+  color: var(--text-soft);
+
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition),
+    color var(--transition);
+}
+
+.btn-stepper:hover {
+  background: var(--yellow-soft);
+  color: var(--yellow);
+}
+
+.btn-stepper:active {
+  background: rgba(255, 163, 26, 0.2);
+}
+
+.cantidad-control input {
+  width: 48px;
+  min-width: 48px;
+
+  padding: 8px 0;
+
+  border: 0;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+
+  outline: none;
+
+  background: #171717;
+
+  color: var(--text);
+
+  font-size: 13px;
+  font-weight: 750;
+
+  text-align: center;
+}
+
+.cantidad-control input:focus {
+  background: var(--yellow-soft);
+  color: var(--yellow);
+}
+
+
+/* =========================================================
+   SUBTOTAL
+   ========================================================= */
+
+.subtotal {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.subtotal span {
+  color: var(--text-muted);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.subtotal strong {
+  color: var(--text);
+
+  font-size: 19px;
+  font-weight: 850;
+
+  letter-spacing: -0.3px;
+}
+
+
+/* =========================================================
+   ELIMINAR
+   ========================================================= */
+
+.btn-eliminar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 77, 77, 0.2);
+  border-radius: var(--radius-md);
+
+  background: var(--danger-soft);
+  color: var(--danger);
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+}
+
+.btn-eliminar:hover {
+  background: rgba(255, 77, 77, 0.18);
+  border-color: rgba(255, 77, 77, 0.5);
+
+  transform: scale(1.06);
+}
+
+.btn-eliminar:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================================================
+   TOTAL
+   ========================================================= */
+
+.total-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  margin-top: 16px;
+
+  padding: 24px 28px;
+
+  overflow: hidden;
+
+  position: relative;
+
+  border: 1px solid var(--yellow-border);
+  border-radius: var(--radius-lg);
+
+  background:
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(255, 163, 26, 0.13),
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      #191919,
+      #111111
+    );
+
+  box-shadow: var(--shadow-lg);
+}
+
+.total-container::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 4px;
+  height: 100%;
+
+  background: var(--yellow);
+
+  box-shadow: 0 0 18px rgba(255, 163, 26, 0.5);
+}
+
+.total-container > div {
+  position: relative;
+
+  text-align: right;
+}
+
+.total-container span {
+  color: var(--text-muted);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.total-container h2 {
+  margin: 5px 0 0;
+
+  color: var(--yellow);
+
+  font-size: clamp(27px, 4vw, 34px);
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: -0.8px;
+
+  text-shadow:
+    0 0 20px rgba(255, 163, 26, 0.15);
+}
+
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   SELECCIÓN DE TEXTO
+   ========================================================= */
+
+.carrito-section ::selection {
+  background: var(--yellow);
+  color: #111;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .carrito-section {
+    padding: 28px 24px 50px;
+  }
+
+  .carrito-item {
+    grid-template-columns:
+      minmax(220px, 1fr)
+      145px
+      120px
+      44px;
+
+    gap: 16px;
+
+    padding: 16px;
+  }
+
+  .item-icono {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MÓVIL
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .carrito-section {
+    padding: 22px 16px 40px;
+  }
+
+  .carrito-header {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 18px;
+  }
+
+  .carrito-header h1 {
+    font-size: 28px;
+  }
+
+  .btn-vaciar {
+    width: 100%;
+  }
+
+  .carrito-item {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 18px 12px;
+
+    padding: 16px;
+  }
+
+  .item-info {
+    grid-column: 1 / -1;
+  }
+
+  .cantidad {
+    grid-column: 1;
+  }
+
+  .subtotal {
+    grid-column: 2;
+
+    align-items: flex-end;
+  }
+
+  .btn-eliminar {
+    grid-column: 1 / -1;
+
+    justify-self: stretch;
+
+    width: 100%;
+    height: 38px;
+  }
+
+  .total-container {
+    justify-content: stretch;
+
+    padding: 22px;
+  }
+
+  .total-container > div {
+    width: 100%;
+
+    text-align: right;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MÓVILES PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .carrito-header h1 {
+    font-size: 25px;
+  }
+
+  .contador {
+    min-width: 27px;
+    height: 24px;
+  }
+
+  .carrito-vacio {
+    min-height: 300px;
+
+    padding: 45px 18px;
+  }
+
+  .carrito-vacio-icon {
+    width: 70px;
+    height: 70px;
+
+    font-size: 30px;
+  }
+
+  .item-info h2 {
+    font-size: 14px;
+  }
+
+  .total-container h2 {
+    font-size: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
